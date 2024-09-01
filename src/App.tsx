@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CircularProgress, Box } from '@mui/material';
+import MainScreen from './pages/MainScreen';
 
 const SpellingCheckForm = React.lazy(() => import('./pages/SpellingCheckForm'));
 
@@ -18,7 +19,8 @@ const App: React.FC = () => {
           </Box>
         }>
           <Routes>
-            <Route path="/" element={<SpellingCheckForm />} />
+            <Route path="/" element={<MainScreen />} />
+            <Route path="/spelling-check" element={<SpellingCheckForm />} />
           </Routes>
         </Suspense>
       </Layout>

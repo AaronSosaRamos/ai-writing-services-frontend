@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -78,6 +79,7 @@ const MenuItemStyled = styled(MenuItem)`
 const Navbar: React.FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -91,8 +93,15 @@ const Navbar: React.FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
     setMenuOpen(true);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuCloseWithoutPath = () => {
     setMenuOpen(false);
+  }
+
+  const handleMenuClose = (path?: string) => {
+    setMenuOpen(false);
+    if (path) {
+      navigate(path);
+    }
   };
 
   return (
@@ -100,12 +109,16 @@ const Navbar: React.FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
       <NavbarContainer position="static" elevation={4}>
         <Toolbar>
           <Title variant="h6">
-            AI Spelling Checker
+            AI Writing Services
           </Title>
           {!isMobile ? (
             <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
-              <MenuItem onClick={handleMenuClose}>Home</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Spelling Check</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/')}>Home</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/spelling-check')}>Spelling Check</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/writing-enhancement')}>Writing Enhancement</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/addition-of-connectors')}>Addition of Connectors</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/textual-tone-shifts')}>Textual Tone Shifts</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/plagiarism-check')}>Plagiarism Check</MenuItem>
               <ToggleButton edge="end" onClick={handleToggle}>
                 {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
               </ToggleButton>
@@ -127,14 +140,18 @@ const Navbar: React.FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
       {isMobile && (
         <Slide direction="down" in={menuOpen} mountOnEnter unmountOnExit>
           <FullScreenMenu darkMode={isDarkMode}>
-            <IconButton onClick={handleMenuClose} sx={{ position: 'absolute', top: 16, right: 16 }}>
+            <IconButton onClick={handleMenuCloseWithoutPath} sx={{ position: 'absolute', top: 16, right: 16 }}>
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" sx={{ marginBottom: '20px', fontWeight: 'bold', color: isDarkMode ? '#fff' : '#000' }}>
-              AI Spelling Checker
+              AI Writing Services
             </Typography>
-            <MenuItemStyled onClick={handleMenuClose}>Home</MenuItemStyled>
-            <MenuItemStyled onClick={handleMenuClose}>Spelling Check</MenuItemStyled>
+            <MenuItemStyled onClick={() => handleMenuClose('/')}>Home</MenuItemStyled>
+            <MenuItemStyled onClick={() => handleMenuClose('/spelling-check')}>Spelling Check</MenuItemStyled>
+            <MenuItemStyled onClick={() => handleMenuClose('/writing-enhancement')}>Writing Enhancement</MenuItemStyled>
+            <MenuItemStyled onClick={() => handleMenuClose('/addition-of-connectors')}>Addition of Connectors</MenuItemStyled>
+            <MenuItemStyled onClick={() => handleMenuClose('/textual-tone-shifts')}>Textual Tone Shifts</MenuItemStyled>
+            <MenuItemStyled onClick={() => handleMenuClose('/plagiarism-check')}>Plagiarism Check</MenuItemStyled>
             <IconButton onClick={handleToggle} sx={{ marginTop: '20px' }}>
               {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
