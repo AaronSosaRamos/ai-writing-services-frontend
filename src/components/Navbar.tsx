@@ -115,10 +115,10 @@ const Navbar: React.FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
             <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
               <MenuItem onClick={() => handleMenuClose('/')}>Home</MenuItem>
               <MenuItem onClick={() => handleMenuClose('/services/spelling-check')}>Spelling Check</MenuItem>
-              <MenuItem onClick={() => handleMenuClose('/writing-enhancement')}>Writing Enhancement</MenuItem>
-              <MenuItem onClick={() => handleMenuClose('/addition-of-connectors')}>Addition of Connectors</MenuItem>
-              <MenuItem onClick={() => handleMenuClose('/textual-tone-shifts')}>Textual Tone Shifts</MenuItem>
-              <MenuItem onClick={() => handleMenuClose('/plagiarism-check')}>Plagiarism Check</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/services/writing-enhancement')}>Writing Enhancement</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/services/addition-of-connectors')}>Addition of Connectors</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/services/textual-tone-shifts')}>Textual Tone Shifts</MenuItem>
+              <MenuItem onClick={() => handleMenuClose('/services/plagiarism-check')}>Plagiarism Check</MenuItem>
               <ToggleButton edge="end" onClick={handleToggle}>
                 {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
               </ToggleButton>
