@@ -32,33 +32,41 @@ const services = [
     icon: <Spellcheck fontSize="large" color="primary" />,
     title: 'Spelling Check',
     description: 'Automatically check and correct the spelling of your documents.',
+    uri: '/services/spelling-check', 
   },
   {
     icon: <Edit fontSize="large" color="primary" />,
     title: 'Writing Enhancement',
     description: 'Improve the quality and clarity of your texts with advanced suggestions.',
+    uri: '/services/writing-enhancement', 
   },
   {
     icon: <Link fontSize="large" color="primary" />,
     title: 'Addition of Connectors',
     description: 'Add appropriate connectors to enhance the flow of your texts.',
+    uri: '/services/addition-of-connectors',
   },
   {
     icon: <ChangeCircle fontSize="large" color="primary" />,
     title: 'Textual Tone Shifts',
     description: 'Adjust the tone of your text according to the context and audience.',
+    uri: '/services/textual-tone-shifts',
   },
   {
     icon: <Plagiarism fontSize="large" color="primary" />,
     title: 'Plagiarism Check',
     description: 'Ensure the originality of your texts with advanced tools.',
+    uri: '/services/plagiarism-check', 
   },
 ];
 
 const MainScreen: React.FC = () => {
+  const handleButtonClick = (uri: string) => {
+    window.location.href = uri; 
+  };
+
   return (
     <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
-      {/* Título principal centrado */}
       <Typography
         variant="h2"
         align="center"
@@ -71,8 +79,7 @@ const MainScreen: React.FC = () => {
       >
         AI WRITING SERVICES
       </Typography>
-      
-      {/* Descripción debajo del título */}
+
       <Typography
         variant="h5"
         align="center"
@@ -86,8 +93,7 @@ const MainScreen: React.FC = () => {
       >
         Enhance your writing with our intelligent AI-powered services. From spelling checks to plagiarism detection, we provide the tools to improve your text with ease and efficiency.
       </Typography>
-      
-      {/* Tarjetas de servicios */}
+
       <Grid container spacing={4}>
         {services.map((service, index) => (
           <Slide
@@ -112,8 +118,12 @@ const MainScreen: React.FC = () => {
                   </Typography>
                 </CardContent>
                 <CardActions sx={{ justifyContent: 'center' }}>
-                  <Button size="medium" color="primary">
-                    Learn More
+                  <Button 
+                    size="medium" 
+                    color="primary"
+                    onClick={() => handleButtonClick(service.uri)} 
+                  >
+                    Use Service
                   </Button>
                 </CardActions>
               </StyledCard>

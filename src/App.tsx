@@ -20,7 +20,9 @@ const App: React.FC = () => {
         }>
           <Routes>
             <Route path="/" element={<MainScreen />} />
-            <Route path="/spelling-check" element={<SpellingCheckForm />} />
+            <Route path="services">
+              <Route path="spelling-check" element={<SpellingCheckForm />} />
+            </Route>
           </Routes>
         </Suspense>
       </Layout>
