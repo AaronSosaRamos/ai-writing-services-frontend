@@ -8,6 +8,7 @@ import MainScreen from './pages/MainScreen';
 import {AIWritingEnhancementForm} from './pages/AIWritingEnhancementForm';
 import AIAdditionOfConnectorsForm from './pages/AIAdditionOfConnectorsForm';
 import { AITextualToneShiftForm } from './pages/AITextualToneShiftForm';
+import AIPlagiarismCheckForm from './pages/AIPlagiarismCheckForm';
 
 const SpellingCheckForm = React.lazy(() => import('./pages/SpellingCheckForm'));
 
@@ -28,7 +29,7 @@ const App: React.FC = () => {
               <Route path="writing-enhancement" element={<AIWritingEnhancementForm />} />
               <Route path="addition-of-connectors" element={<AIAdditionOfConnectorsForm />} />
               <Route path="textual-tone-shifts" element={<AITextualToneShiftForm />} />
-
+              <Route path="plagiarism-check" element={<AIPlagiarismCheckForm />} />
             </Route>
           </Routes>
         </Suspense>
