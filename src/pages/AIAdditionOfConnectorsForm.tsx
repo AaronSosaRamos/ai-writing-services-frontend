@@ -235,7 +235,7 @@ export const AIAdditionOfConnectorsForm: React.FC = () => {
           <ResultCard>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Enhancement Results:
+                Results:
               </Typography>
               <AIAdditionOfConnectorsViewer data={result} />
             </CardContent>

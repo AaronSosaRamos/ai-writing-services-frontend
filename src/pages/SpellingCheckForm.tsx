@@ -41,19 +41,20 @@ type ResultData = {
 };
 
 const FormContainer = styled(Box)`
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  background: ${({ theme }) => theme.palette.background.paper};
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  gap: 25px;
+  padding: 30px;
+  background: ${({ theme }) => theme.palette.background.default};
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  transition: all 0.4s ease;
 
   &:hover {
-    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    transform: translateY(-5px);
   }
 `;
 
@@ -61,25 +62,37 @@ const TextArea = styled(TextField)`
   padding: 10px;
 `;
 
-const SubmitButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.primary.main};
+const StyledButton = styled(Button)`
+  background-color: ${({ theme }) => theme.palette.primary.main};
   color: #fff;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: background 0.3s ease;
+  padding: 12px 24px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.palette.primary.dark};
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+    transform: translateY(-3px);
+  }
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.palette.action.disabled};
+  }
+`;
+
+const StyledSelect = styled(Select)`
+  background-color: ${({ theme }) => theme.palette.background.paper};
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 
 const ResultCard = styled(Card)`
-  margin-top: 20px;
-  padding: 10px;
-  animation: fadeIn 0.5s ease-in-out;
+  margin-top: 25px;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.palette.background.default};
+  animation: fadeIn 0.6s ease-in-out;
 
   @keyframes fadeIn {
     from {
@@ -130,17 +143,17 @@ const SpellingCheckForm: React.FC = () => {
 
   return (
     <FormContainer component="form" onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h5" component="h2" align="center" gutterBottom>
+      <Typography variant="h4" component="h2" align="center" gutterBottom>
         Spelling Checker
       </Typography>
       <FormControl variant="outlined" error={!!errors.lang} fullWidth>
         <InputLabel id="lang-label">Language</InputLabel>
-        <Select
+        <StyledSelect
           labelId="lang-label"
           label="Language"
           defaultValue=""
           {...register('lang')}
-          onChange={(e) => setValue('lang', e.target.value)}
+          onChange={(e) => setValue('lang', e.target.value as string)}
           startAdornment={<LanguageIcon />}
         >
           <MenuItem value="en">English</MenuItem>
@@ -149,7 +162,7 @@ const SpellingCheckForm: React.FC = () => {
           <MenuItem value="de">German</MenuItem>
           <MenuItem value="it">Italian</MenuItem>
           <MenuItem value="pt">Portuguese</MenuItem>
-        </Select>
+        </StyledSelect>
         {errors.lang && <Typography color="error">{errors.lang.message}</Typography>}
       </FormControl>
       <TextArea
@@ -165,9 +178,9 @@ const SpellingCheckForm: React.FC = () => {
         }}
         fullWidth
       />
-      <SubmitButton type="submit" variant="contained" startIcon={<SpellcheckIcon />} disabled={loading}>
+      <StyledButton type="submit" variant="contained" startIcon={<SpellcheckIcon />} disabled={loading}>
         {loading ? 'Checking...' : 'Check Spelling'}
-      </SubmitButton>
+      </StyledButton>
 
       <Collapse in={!!result}>
         {result && (

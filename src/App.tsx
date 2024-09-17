@@ -7,6 +7,7 @@ import { CircularProgress, Box } from '@mui/material';
 import MainScreen from './pages/MainScreen';
 import {AIWritingEnhancementForm} from './pages/AIWritingEnhancementForm';
 import AIAdditionOfConnectorsForm from './pages/AIAdditionOfConnectorsForm';
+import { AITextualToneShiftForm } from './pages/AITextualToneShiftForm';
 
 const SpellingCheckForm = React.lazy(() => import('./pages/SpellingCheckForm'));
 
@@ -26,6 +27,8 @@ const App: React.FC = () => {
               <Route path="spelling-check" element={<SpellingCheckForm />} />
               <Route path="writing-enhancement" element={<AIWritingEnhancementForm />} />
               <Route path="addition-of-connectors" element={<AIAdditionOfConnectorsForm />} />
+              <Route path="textual-tone-shifts" element={<AITextualToneShiftForm />} />
+
             </Route>
           </Routes>
         </Suspense>
