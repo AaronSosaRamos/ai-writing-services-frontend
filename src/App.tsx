@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { CircularProgress, Box } from '@mui/material';
 import MainScreen from './pages/MainScreen';
 import {AIWritingEnhancementForm} from './pages/AIWritingEnhancementForm';
+import AIAdditionOfConnectorsForm from './pages/AIAdditionOfConnectorsForm';
 
 const SpellingCheckForm = React.lazy(() => import('./pages/SpellingCheckForm'));
 
@@ -24,6 +25,7 @@ const App: React.FC = () => {
             <Route path="services">
               <Route path="spelling-check" element={<SpellingCheckForm />} />
               <Route path="writing-enhancement" element={<AIWritingEnhancementForm />} />
+              <Route path="addition-of-connectors" element={<AIAdditionOfConnectorsForm />} />
             </Route>
           </Routes>
         </Suspense>
