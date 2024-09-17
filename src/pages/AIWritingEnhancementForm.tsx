@@ -171,6 +171,7 @@ export const AIWritingEnhancementForm: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     try {
+      console.log(data)
       const response = await mockApiResponse();
       setResult(response);
       toast.success('Text enhanced successfully!');
