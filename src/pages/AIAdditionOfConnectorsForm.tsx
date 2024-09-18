@@ -7,6 +7,7 @@ import { Language as LanguageIcon, Spellcheck as SpellcheckIcon } from '@mui/ico
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import AIAdditionOfConnectorsViewer from '../responses/AdditionOfConnectorsResponse';
+import api from '../services/api';
 
 const schema = z.object({
   lang: z
@@ -84,84 +85,6 @@ const ResultCard = styled(Card)`
   }
 `;
 
-const mockApiRequest = (data: FormData) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const response = {
-        text: "La empresa presentó sus resultados financieros al cierre del tercer trimestre. Las cifras mostraron un incremento significativo en los ingresos brutos. El equipo directivo se reunió para discutir estrategias futuras. Los inversores expresaron su interés en las nuevas iniciativas de expansión. El mercado respondió con un leve aumento en el valor de las acciones. La compañía está planeando una reestructuración de sus operaciones. El objetivo es mejorar la eficiencia y reducir costos operativos. Los empleados fueron informados sobre los posibles cambios en la estructura organizativa. La dirección revisará los procesos internos para optimizar la productividad. Las proyecciones indican un crecimiento sostenido en los próximos años. El departamento de marketing está evaluando nuevas oportunidades para aumentar la participación en el mercado global.",
-        lang: data.lang,
-        logical_relations: [
-          { sentence: "La empresa presentó sus resultados financieros al cierre del tercer trimestre.", relation: "addition", confidence: 0.9 },
-          { sentence: "Las cifras mostraron un incremento significativo en los ingresos brutos.", relation: "cause-effect", confidence: 0.85 },
-          { sentence: "El equipo directivo se reunió para discutir estrategias futuras.", relation: "addition", confidence: 0.8 },
-          { sentence: "Los inversores expresaron su interés en las nuevas iniciativas de expansión.", relation: "cause-effect", confidence: 0.8 },
-          { sentence: "El mercado respondió con un leve aumento en el valor de las acciones.", relation: "cause-effect", confidence: 0.85 },
-          { sentence: "La compañía está planeando una reestructuración de sus operaciones.", relation: "addition", confidence: 0.9 },
-          { sentence: "El objetivo es mejorar la eficiencia y reducir costos operativos.", relation: "purpose", confidence: 0.9 },
-          { sentence: "Los empleados fueron informados sobre los posibles cambios en la estructura organizativa.", relation: "addition", confidence: 0.8 },
-          { sentence: "La dirección revisará los procesos internos para optimizar la productividad.", relation: "purpose", confidence: 0.85 },
-          { sentence: "Las proyecciones indican un crecimiento sostenido en los próximos años.", relation: "prediction", confidence: 0.9 },
-          { sentence: "El departamento de marketing está evaluando nuevas oportunidades para aumentar la participación en el mercado global.", relation: "addition", confidence: 0.8 },
-        ],
-        connector_suggestions: [
-          { connector: "Además", position: 1, relation_type: "addition" },
-          { connector: "Esto se debe a que", position: 2, relation_type: "cause-effect" },
-          { connector: "Asimismo", position: 3, relation_type: "addition" },
-          { connector: "Como resultado", position: 4, relation_type: "cause-effect" },
-          { connector: "Por lo tanto", position: 5, relation_type: "cause-effect" },
-          { connector: "Además", position: 6, relation_type: "addition" },
-          { connector: "Con el objetivo de", position: 7, relation_type: "purpose" },
-          { connector: "Asimismo", position: 8, relation_type: "addition" },
-          { connector: "Para mejorar", position: 9, relation_type: "purpose" },
-          { connector: "Se estima que", position: 10, relation_type: "prediction" },
-          { connector: "Además", position: 11, relation_type: "addition" },
-        ],
-        text_with_connectors: "La empresa presentó sus resultados financieros al cierre del tercer trimestre. Además, las cifras mostraron un incremento significativo en los ingresos brutos. Esto se debe a que el equipo directivo se reunió para discutir estrategias futuras. Asimismo, los inversores expresaron su interés en las nuevas iniciativas de expansión. Como resultado, el mercado respondió con un leve aumento en el valor de las acciones. Por lo tanto, la compañía está planeando una reestructuración de sus operaciones. Con el objetivo de mejorar la eficiencia y reducir costos operativos, los empleados fueron informados sobre los posibles cambios en la estructura organizativa. Asimismo, la dirección revisará los procesos internos para optimizar la productividad. Se estima que las proyecciones indican un crecimiento sostenido en los próximos años. Además, el departamento de marketing está evaluando nuevas oportunidades para aumentar la participación en el mercado global.",
-        fluency_corrections: [
-          {
-            start_index: 0,
-            end_index: 57,
-            correction: "La empresa presentó sus resultados financieros correspondientes al cierre del tercer trimestre.",
-            explanation: "La frase se ha reestructurado para dar mayor claridad y precisión sobre a qué se refieren los resultados financieros.",
-          },
-          {
-            start_index: 58,
-            end_index: 88,
-            correction: "Las cifras mostraron un incremento significativo en los ingresos brutos, impulsado por la reciente estrategia del equipo directivo.",
-            explanation: "Se ha añadido una referencia al equipo directivo para conectar mejor la causa con el efecto y mejorar la fluidez de la frase.",
-          },
-          {
-            start_index: 155,
-            end_index: 158,
-            correction: "Por esta razón,",
-            explanation: "El cambio de 'Como resultado,' a 'Por esta razón,' mejora la conexión lógica entre las oraciones.",
-          },
-          {
-            start_index: 231,
-            end_index: 231,
-            correction: "que",
-            explanation: "Añadir 'que' al final de la oración mejora la fluidez al conectar mejor las ideas.",
-          },
-          {
-            start_index: 311,
-            end_index: 341,
-            correction: "Se prevé que las proyecciones indican un crecimiento sostenido en los próximos años.",
-            explanation: "El cambio de 'Se estima que' a 'Se prevé que' mejora la claridad y naturalidad de la frase.",
-          },
-          {
-            start_index: 342,
-            end_index: 396,
-            correction: "Adicionalmente, el departamento de marketing está evaluando nuevas oportunidades para aumentar su participación en el mercado global.",
-            explanation: "El término 'Adicionalmente' es más fluido que 'Además,' y se ha añadido 'su' para especificar que se refiere a la participación del departamento.",
-          },
-        ],
-        final_text: "La empresa presentó sus resultados financieros correspondientes al cierre del tercer trimestre. Las cifras mostraron un incremento significativo en los ingresos brutos, impulsado por la reciente estrategia del equipo directivo. Asimismo, los inversores expresaron su interés en las nuevas iniciativas de expansión. Por esta razón, el mercado respondió con un leve aumento en el valor de las acciones. Por lo tanto, la compañía está planeando una reestructuración de sus operaciones. Con el objetivo de mejorar la eficiencia y reducir costos operativos, los empleados fueron informados sobre los posibles cambios en la estructura organizativa. Asimismo, la dirección revisará los procesos internos para optimizar la productividad. Se prevé que las proyecciones indican un crecimiento sostenido en los próximos años. Adicionalmente, el departamento de marketing está evaluando nuevas oportunidades para aumentar su participación en el mercado global."
-      };
-      resolve(response);
-    }, 2000); 
-  });
-};
-
 export const AIAdditionOfConnectorsForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any | null>(null);
@@ -177,11 +100,9 @@ export const AIAdditionOfConnectorsForm: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     try {
-      console.log(data)
-      const response = await mockApiRequest(data); 
-      setResult(response);
+      const response = await api.post('/addition-of-connectors', data);
+      setResult(response.data);
       toast.success('Text processed with connectors successfully!');
-      console.log(response); 
     } catch (error) {
       toast.error('An error occurred while processing the text.');
     } finally {
