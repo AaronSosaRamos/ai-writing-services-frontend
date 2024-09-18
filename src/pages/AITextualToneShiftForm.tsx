@@ -7,6 +7,7 @@ import { Language as LanguageIcon, Tune as TuneIcon, Spellcheck as SpellcheckIco
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import AITextualToneShiftResponse from '../responses/TextualToneShiftResponse';
+import api from '../services/api';
 
 const schema = z.object({
   lang: z
@@ -77,119 +78,6 @@ const ResultCard = styled(Card)`
   }
 `;
 
-const mockApiRequest = (data: FormData) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const response = {
-        text: "Pues mira, un LLM es básicamente como un cerebro gigante que ha leído un montón de cosas de internet, libros, artículos, ¡todo lo que te puedas imaginar! Entonces, cuando le preguntas algo, no es que piense de verdad, pero usa toda esa información que tiene guardada para darte una respuesta que suene inteligente. Es como si juntara pedacitos de todo lo que ha leído para intentar entender qué le estás diciendo y responder de la mejor forma posible. O sea, no es que sepa realmente, pero hace como que sí. Eso sí, a veces suelta cosas que no tienen ni pies ni cabeza, pero la mayoría del tiempo te deja pensando ¡vaya, qué listo parece este!",
-        lang: "es",
-        target_tone: "formal",
-        tone_analysis: [
-          {
-            sentence: "Pues mira, un LLM es básicamente como un cerebro gigante que ha leído un montón de cosas de internet, libros, artículos, ¡todo lo que te puedas imaginar!",
-            current_tone: "informal",
-            change_needed: true,
-            reason: "The use of colloquial phrases and exclamations creates an informal tone, which is not suitable for a formal context."
-          },
-          {
-            sentence: "Entonces, cuando le preguntas algo, no es que piense de verdad, pero usa toda esa información que tiene guardada para darte una respuesta que suene inteligente.",
-            current_tone: "informal",
-            change_needed: true,
-            reason: "The conversational style and casual language need to be adjusted for a more formal presentation."
-          },
-          {
-            sentence: "Es como si juntara pedacitos de todo lo que ha leído para intentar entender qué le estás diciendo y responder de la mejor forma posible.",
-            current_tone: "informal",
-            change_needed: true,
-            reason: "The metaphorical and casual wording should be replaced with more formal language to meet the target tone."
-          },
-          {
-            sentence: "O sea, no es que sepa realmente, pero hace como que sí.",
-            current_tone: "informal",
-            change_needed: true,
-            reason: "The informal phrase 'O sea' and the casual expression require a more formal rephrasing."
-          },
-          {
-            sentence: "Eso sí, a veces suelta cosas que no tienen ni pies ni cabeza, pero la mayoría del tiempo te deja pensando ¡vaya, qué listo parece este!",
-            current_tone: "informal",
-            change_needed: true,
-            reason: "The playful language and exclamations contribute to an informal tone that should be revised for formality."
-          }
-        ],
-        tone_shift_suggestions: [
-          {
-            sentence: "Pues mira, un LLM es básicamente como un cerebro gigante que ha leído un montón de cosas de internet, libros, artículos, ¡todo lo que te puedas imaginar!",
-            suggested_tone: "formal",
-            suggestion: "Un LLM puede considerarse un sistema de procesamiento de lenguaje natural que ha sido entrenado con una gran cantidad de datos provenientes de diversas fuentes, incluyendo internet, libros y artículos.",
-            position: 0
-          },
-          {
-            sentence: "Entonces, cuando le preguntas algo, no es que piense de verdad, pero usa toda esa información que tiene guardada para darte una respuesta que suene inteligente.",
-            suggested_tone: "formal",
-            suggestion: "Cuando se le formula una pregunta, el LLM no procesa información de manera consciente, sino que utiliza los datos almacenados para generar una respuesta coherente.",
-            position: 1
-          },
-          {
-            sentence: "Es como si juntara pedacitos de todo lo que ha leído para intentar entender qué le estás diciendo y responder de la mejor forma posible.",
-            suggested_tone: "formal",
-            suggestion: "El sistema integra fragmentos de la información que ha analizado para interpretar la consulta realizada y proporcionar una respuesta adecuada.",
-            position: 2
-          },
-          {
-            sentence: "O sea, no es que sepa realmente, pero hace como que sí.",
-            suggested_tone: "formal",
-            suggestion: "No posee conocimiento en el sentido humano, pero simula comprensión a través de patrones aprendidos.",
-            position: 3
-          },
-          {
-            sentence: "Eso sí, a veces suelta cosas que no tienen ni pies ni cabeza, pero la mayoría del tiempo te deja pensando ¡vaya, qué listo parece este!",
-            suggested_tone: "formal",
-            suggestion: "Sin embargo, en ocasiones puede ofrecer respuestas que carecen de coherencia, aunque en general logra proporcionar reflexiones que resultan interesantes.",
-            position: 4
-          }
-        ],
-        tone_shift_implementation: [
-          {
-            original_sentence: "Pues mira, un LLM es básicamente como un cerebro gigante que ha leído un montón de cosas de internet, libros, artículos, ¡todo lo que te puedas imaginar!",
-            revised_sentence: "Un LLM puede considerarse un sistema de procesamiento de lenguaje natural que ha sido entrenado con una gran cantidad de datos provenientes de diversas fuentes, incluyendo internet, libros y artículos.",
-            final_review: "yes",
-            review_notes: "The tone shift was successfully implemented to a more formal style."
-          },
-          {
-            original_sentence: "Entonces, cuando le preguntas algo, no es que piense de verdad, pero usa toda esa información que tiene guardada para darte una respuesta que suene inteligente.",
-            revised_sentence: "Cuando se le formula una pregunta, el LLM no procesa información de manera consciente, sino que utiliza los datos almacenados para generar una respuesta coherente.",
-            final_review: "yes",
-            review_notes: "The formal tone is appropriate for the context."
-          },
-          {
-            original_sentence: "Es como si juntara pedacitos de todo lo que ha leído para intentar entender qué le estás diciendo y responder de la mejor forma posible.",
-            revised_sentence: "El sistema integra fragmentos de la información que ha analizado para interpretar la consulta realizada y proporcionar una respuesta adecuada.",
-            final_review: "yes",
-            review_notes: "The formalization of the sentence enhances clarity."
-          },
-          {
-            original_sentence: "O sea, no es que sepa realmente, pero hace como que sí.",
-            revised_sentence: "No posee conocimiento en el sentido humano, pero simula comprensión a través de patrones aprendidos.",
-            final_review: "yes",
-            review_notes: "The tone shift is successful; the revised sentence is formal and informative."
-          },
-          {
-            original_sentence: "Eso sí, a veces suelta cosas que no tienen ni pies ni cabeza, pero la mayoría del tiempo te deja pensando ¡vaya, qué listo parece este!",
-            revised_sentence: "Sin embargo, en ocasiones puede ofrecer respuestas que carecen de coherencia, aunque en general logra proporcionar reflexiones que resultan interesantes.",
-            final_review: "yes",
-            review_notes: "The revised sentence maintains the original meaning while adopting a formal tone."
-          }
-        ],
-        final_text: "Un LLM puede considerarse un sistema de procesamiento de lenguaje natural que ha sido entrenado con una gran cantidad de datos provenientes de diversas fuentes, incluyendo internet, libros y artículos. Cuando se le formula una pregunta, el LLM no procesa información de manera consciente, sino que utiliza los datos almacenados para generar una respuesta coherente. El sistema integra fragmentos de la información que ha analizado para interpretar la consulta realizada y proporcionar una respuesta adecuada. No posee conocimiento en el sentido humano, pero simula comprensión a través de patrones aprendidos. Sin embargo, en ocasiones puede ofrecer respuestas que carecen de coherencia, aunque en general logra proporcionar reflexiones que resultan interesantes.",
-        final_review: "yes",
-        review_notes: "The overall text successfully reflects a formal tone, making it suitable for an academic or professional audience.",
-        final_check: "yes"
-      };
-      resolve(response);
-    }, 2000);
-  });
-};
-
 export const AITextualToneShiftForm: React.FC = () => {
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -200,9 +88,8 @@ export const AITextualToneShiftForm: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     try {
-      console.log(data);
-      const response = await mockApiRequest(data);
-      setResult(response);
+      const response = await api.post('/textual-tone-shifts', data);
+      setResult(response.data);
       toast.success('Tone adjustment request sent successfully!');
     } catch (error) {
       toast.error('An error occurred while processing the request.');
