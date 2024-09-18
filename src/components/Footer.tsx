@@ -33,8 +33,8 @@ const FooterText = styled(Typography)`
 const Footer: React.FC = () => {
   return (
     <FooterContainer component="footer">
-      <AppName variant="h6">AI Spelling Checker</AppName>
-      <FooterText variant="body2">© 2024 AI Spelling Checker. All rights reserved.</FooterText>
+      <AppName variant="h6">AI Writing Services</AppName>
+      <FooterText variant="body2">© 2024 AI Writing Services. All rights reserved.</FooterText>
       <FooterText variant="body2">Made by: Wilfredo Aaron Sosa Ramos</FooterText>
     </FooterContainer>
   );
